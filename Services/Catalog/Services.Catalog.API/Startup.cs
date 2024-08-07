@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Services.Catalog.API.Services;
+using Services.Catalog.API.Services.Interfaces;
 using Services.Catalog.API.Settings;
 
 namespace Services.Catalog.API
@@ -21,10 +23,10 @@ namespace Services.Catalog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICategoryService,CategoryService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
-           
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddSingleton<IDatabaseSettings>(sp =>
             {
