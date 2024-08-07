@@ -1,6 +1,6 @@
 ﻿namespace Shared.Dtos
 {
-    public class NoContect
+    public class NoContent
     {
     }
 }
