@@ -18,7 +18,7 @@ namespace Services.Catalog.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
             var categories = await _categoryService.GetAllAsync();
             return CreateActionResultInstance(categories);
