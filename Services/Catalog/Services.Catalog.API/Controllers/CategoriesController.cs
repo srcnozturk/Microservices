@@ -17,6 +17,7 @@ namespace Services.Catalog.API.Controllers
             _categoryService = categoryService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var categories = await _categoryService.GetAllAsync();
@@ -29,6 +30,8 @@ namespace Services.Catalog.API.Controllers
             var categories =await _categoryService.GetByIdAsync(id);
             return CreateActionResultInstance(categories);
         }
+
+        [HttpPost]
         public async Task<IActionResult> Create(CategoryDto categoryDto)
         {
             var category=await _categoryService.CreateAsync(categoryDto);
