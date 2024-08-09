@@ -59,7 +59,7 @@ namespace IdentityServer
                             Email = "sercan@gmail.com",
                             City = "Tekirdağ",
 
-                        },"Password12*").Wait();
+                        },"Password123*").Wait();
                     }
                 }
                     Log.Information("Starting host...");
