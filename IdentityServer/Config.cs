@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace IdentityServer
@@ -20,7 +21,12 @@ namespace IdentityServer
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
                    {
-                
+                        new IdentityResources.Email(),
+                        new IdentityResources.OpenId(), // Kullanıcı Id'si zorunlu 
+                        new IdentityResources.Profile(),
+                        new IdentityResource(){Name="roles",DisplayName="Roles",Description="Kullanıcı rolleri",UserClaims=
+                            new[]{"role"} }
+
                    };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -34,15 +40,28 @@ namespace IdentityServer
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
-              new Client
-              {
+                new Client
+                {
                   ClientName="Asp.Net Core MVC",
                   ClientId="WebMvcClient",
                   ClientSecrets ={new Secret("secret".Sha256()) },
                   AllowedGrantTypes=GrantTypes.ClientCredentials,
                   AllowedScopes={ "catalog_fullpermission", "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
 
-              }
+                },
+                new Client
+                {
+                  ClientName="Asp.Net Core MVC",
+                  ClientId="WebMvcClientForUser",
+                  ClientSecrets ={new Secret("secret".Sha256()) },
+                  AllowedGrantTypes=GrantTypes.ResourceOwnerPassword, //Credintials kullanılırsa refresh token alınmıyo
+                  AllowedScopes={ IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.StandardScopes.OfflineAccess,"roles"},
+                  AccessTokenLifetime=1*60*30,
+                  RefreshTokenExpiration=TokenExpiration.Absolute,
+                  AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMinutes(15)-DateTime.Now).TotalSeconds, // Refresh Token süresi 15 dk
+                  RefreshTokenUsage = TokenUsage.ReUse
+                }
             };
     }
 }
