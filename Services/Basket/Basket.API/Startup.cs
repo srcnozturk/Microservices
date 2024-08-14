@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Services.Basket.API.Services;
 using Services.Basket.API.Settings;
+using Shared.Services;
 
 namespace Basket.API
 {
@@ -22,6 +23,8 @@ namespace Basket.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddScoped<ISharedIdentityService,SharedIdentityService>();
             services.Configure<RedisSettings>(Configuration.GetSection(nameof(RedisSettings)));
 
             services.AddSingleton<RedisService>(sp=>
