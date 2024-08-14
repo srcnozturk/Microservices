@@ -25,6 +25,7 @@ namespace Basket.API
         {
             services.AddHttpContextAccessor();
             services.AddScoped<ISharedIdentityService,SharedIdentityService>();
+            services.AddScoped<IBasketService,BasketService>();
             services.Configure<RedisSettings>(Configuration.GetSection(nameof(RedisSettings)));
 
             services.AddSingleton<RedisService>(sp=>
