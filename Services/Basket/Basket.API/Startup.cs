@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Services.Basket.API.Services;
 using Services.Basket.API.Settings;
 
 namespace Basket.API
@@ -21,6 +23,17 @@ namespace Basket.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<RedisSettings>(Configuration.GetSection(nameof(RedisSettings)));
+
+            services.AddSingleton<RedisService>(sp=>
+            {
+                var redisSettings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+
+                var redis = new RedisService(redisSettings.Host, redisSettings.Port);
+                redis.Connect();
+
+                return redis;
+            });
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
