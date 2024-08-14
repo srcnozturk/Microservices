@@ -56,8 +56,11 @@ namespace IdentityServer
                   AllowOfflineAccess=true,
                   ClientSecrets ={new Secret("secret".Sha256()) },
                   AllowedGrantTypes=GrantTypes.ResourceOwnerPassword, //Credintials kullanılırsa refresh token alınmıyo
-                  AllowedScopes={ IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.StandardScopes.OfflineAccess,"roles"},
+                  AllowedScopes={ IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        IdentityServerConstants.LocalApi.ScopeName,"roles"},
                   AccessTokenLifetime=1*60*30,
                   RefreshTokenExpiration=TokenExpiration.Absolute,
                   AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMinutes(15)-DateTime.Now).TotalSeconds, // Refresh Token süresi 15 dk
