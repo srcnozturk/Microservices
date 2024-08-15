@@ -16,7 +16,7 @@ namespace PhotoStock.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PhotoSave(IFormFile photo, CancellationToken cancellationToken)
         {
-            if (photo is null && photo.Length > 0)
+            if (photo is not null && photo.Length > 0)
             {
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photo.FileName);
 
@@ -34,11 +34,10 @@ namespace PhotoStock.API.Controllers
             return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
 
-        [HttpDelete]
         public async Task<IActionResult> PhotoDelete(string photoUrl)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwrooot/photos", photoUrl);
-            if (System.IO.File.Exists(path)) return CreateActionResultInstance(Response<NoContent>.Fail("Photo is not found!",404));
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photoUrl);
+            if (!System.IO.File.Exists(path)) return CreateActionResultInstance(Response<NoContent>.Fail("Photo is not found!",404));
             
             System.IO.File.Delete(path);
             return CreateActionResultInstance(Response<NoContent>.Success(204));
