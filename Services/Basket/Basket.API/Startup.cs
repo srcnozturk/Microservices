@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Services.Basket.API.Services;
 using Services.Basket.API.Settings;
 using Shared.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Basket.API
 {
@@ -28,7 +29,7 @@ namespace Basket.API
         {
 
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); // Jwt.io'da maplemeden sub'ýn mapini kaldýr.
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
