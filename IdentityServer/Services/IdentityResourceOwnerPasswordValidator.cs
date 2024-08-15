@@ -38,7 +38,6 @@ namespace IdentityServer.Services
             // Şifre ve kullancıı adı doğruysa token üreticek
             context.Result = new GrantValidationResult(existUser.Id.ToString(), OidcConstants.AuthenticationMethods.Password);
 
-            throw new System.NotImplementedException();
         }
     }
 }
