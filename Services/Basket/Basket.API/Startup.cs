@@ -32,7 +32,7 @@ namespace Basket.API
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
-                options.Audience = "resource_catalog";
+                options.Audience = "resource_basket";
                 options.RequireHttpsMetadata = false;
             });
 
