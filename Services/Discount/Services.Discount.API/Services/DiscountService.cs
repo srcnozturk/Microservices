@@ -46,7 +46,7 @@ namespace Services.Discount.API.Services
             var hasDiscount = discount.FirstOrDefault();
 
             return hasDiscount is null ? Response<Models.Discount>.Fail("Discount not found!",404) 
-                : Response<Models.Discount>.Success(200);
+                : Response<Models.Discount>.Success(hasDiscount,200);
         }
 
         public async Task<Response<Models.Discount>> GetById(int id)
