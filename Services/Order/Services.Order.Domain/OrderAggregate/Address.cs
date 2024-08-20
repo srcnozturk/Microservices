@@ -15,9 +15,9 @@ namespace Services.Order.Domain.OrderAggregate
         {
             Province = province;
             District = district;
-            Street = street;
-            ZipCode = zipCode;
-            Line = line;
+            Street   = street;
+            ZipCode  = zipCode;
+            Line     = line;
         }
 
         //public void SetZipCode(string zipCode)
