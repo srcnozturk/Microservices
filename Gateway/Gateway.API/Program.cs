@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Gateway.API
@@ -11,7 +12,15 @@ namespace Gateway.API
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            
+            
+            
+            Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingcontext,config) =>
+            {
+                config.AddJsonFile($"configuration.{hostingcontext.HostingEnvironment.EnvironmentName.ToLower()}.json")
+                .AddEnvironmentVariables();
+
+            })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
