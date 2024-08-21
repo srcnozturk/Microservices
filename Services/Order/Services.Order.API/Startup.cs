@@ -1,6 +1,9 @@
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Services.Order.Infrastructure;
 using Shared.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Services.Order.API
 {
@@ -23,6 +27,15 @@ namespace Services.Order.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); // Jwt.io'da maplemeden sub'ýn mapini kaldýr.
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerURL"];
+                options.Audience = "resource_order";
+                options.RequireHttpsMetadata = false;
+            });
+
             services.AddDbContext<OrderDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
             sqlOptions => sqlOptions.MigrationsAssembly("Services.Order.Infrastructure")));
@@ -30,8 +43,11 @@ namespace Services.Order.API
             services.AddHttpContextAccessor();
             services.AddScoped<ISharedIdentityService,SharedIdentityService>();
             services.AddMediatR(typeof(Application.Handlers.CreateOrderCommandHandler).Assembly);
-
-            services.AddControllers();
+            
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Services.Order.API", Version = "v1" });
@@ -49,7 +65,7 @@ namespace Services.Order.API
             }
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
