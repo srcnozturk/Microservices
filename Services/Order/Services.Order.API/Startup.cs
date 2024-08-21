@@ -21,13 +21,10 @@ namespace Services.Order.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<OrderDbContext>(opt =>
-            {
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),configure =>
-                {
-                    configure.MigrationsAssembly("Services.Order.Infrastructure");
-                });
-            });
+            services.AddDbContext<OrderDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+            sqlOptions => sqlOptions.MigrationsAssembly("Services.Order.Infrastructure")));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

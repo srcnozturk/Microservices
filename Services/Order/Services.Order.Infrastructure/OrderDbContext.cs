@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Services.Order.Domain.OrderAggregate;
 
 namespace Services.Order.Infrastructure
 {
