@@ -18,6 +18,7 @@ namespace IdentityServer
                 new ApiResource("resource_basket"){ Scopes={ "basket_fullpermission" } },
                 new ApiResource("resource_discount"){ Scopes={ "discount_fullpermission" } },
                 new ApiResource("resource_order"){ Scopes={ "order_fullpermission" } },
+                new ApiResource("resource_fakepayment"){ Scopes={ "fakepayment_fullpermission" } },
                 new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -40,6 +41,7 @@ namespace IdentityServer
                 new ApiScope("basket_fullpermission","Basket API için full erişim"),
                 new ApiScope("discount_fullpermission","Discount API için full erişim"),
                 new ApiScope("order_fullpermission","Order API için full erişim"),
+                new ApiScope("fakepayment_fullpermission","Fake Payment API için full erişim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -63,7 +65,7 @@ namespace IdentityServer
                   AllowOfflineAccess=true,
                   ClientSecrets ={new Secret("secret".Sha256()) },
                   AllowedGrantTypes=GrantTypes.ResourceOwnerPassword, //Credintials kullanılırsa refresh token alınmıyo
-                  AllowedScopes={ "order_fullpermission","discount_fullpermission","basket_fullpermission",IdentityServerConstants.StandardScopes.Email,
+                  AllowedScopes={ "fakepayment_fullpermission","order_fullpermission","discount_fullpermission","basket_fullpermission",IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
