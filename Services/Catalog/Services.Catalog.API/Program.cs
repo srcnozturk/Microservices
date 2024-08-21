@@ -28,6 +28,7 @@ namespace Services.Catalog.API
                     categoryService.CreateAsync(new CategoryDto { Name="Asp.Net Core API Kursu"}).Wait();
                 }
             }
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
