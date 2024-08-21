@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Services.Order.Application.Commands
 {
-    class CreateOrderCommand : IRequest<Response<CreatedOrderDto>>
+    public class CreateOrderCommand : IRequest<Response<CreatedOrderDto>>
     {
         public string BuyerId { get; set; }
         public List<OrderItemDto> OrderItems { get; set; }

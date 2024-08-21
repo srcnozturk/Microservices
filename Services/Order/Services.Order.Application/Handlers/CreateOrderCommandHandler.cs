@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Order.Application.Handlers
 {
-    class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response<CreatedOrderDto>>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response<CreatedOrderDto>>
     {
         private readonly OrderDbContext db;
 
