@@ -28,7 +28,11 @@
       ],
       "UpstreamPathTemplate": "/services/photostock/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http"
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "photo_stock_fullpermission" ]
+      }
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -41,7 +45,11 @@
       ],
       "UpstreamPathTemplate": "/services/basket/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http"
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "basket_fullpermission" ]
+      }
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -54,34 +62,44 @@
       ],
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http"
-    },
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "discount_fullpermission" ]
+      },
+      {
+        "DownstreamPathTemplate": "/api/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5015
+          }
+        ],
+        "UpstreamPathTemplate": "/services/order/{everything}",
+        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+        "UpstreamScheme": "http",
+        "AuthenticationOptions": {
+          "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+          "AllowedScopes": [ "order_fullpermission" ]
+        },
         {
-          "Host": "localhost",
-          "Port": 5015
+          "DownstreamPathTemplate": "/api/{everything}",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "localhost",
+              "Port": 5016
+            }
+          ],
+          "UpstreamPathTemplate": "/services/fakepayment/{everything}",
+          "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+          "UpstreamScheme": "http",
+          "AuthenticationOptions": {
+            "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+            "AllowedScopes": [ "fakepayment_fullpermission" ]
+          }
         }
-      ],
-      "UpstreamPathTemplate": "/services/order/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http"
-    },
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5016
-        }
-      ],
-      "UpstreamPathTemplate": "/services/fakepayment/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http"
-    }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
