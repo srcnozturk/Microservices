@@ -67,41 +67,42 @@
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "discount_fullpermission" ]
       }
-      },
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5015
+        }
+      ],
+      "UpstreamPathTemplate": "/services/order/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "order_fullpermission" ]
+
+      }
+    },
       {
         "DownstreamPathTemplate": "/api/{everything}",
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
           {
             "Host": "localhost",
-            "Port": 5015
+            "Port": 5016
           }
         ],
-        "UpstreamPathTemplate": "/services/order/{everything}",
+        "UpstreamPathTemplate": "/services/fakepayment/{everything}",
         "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
         "UpstreamScheme": "http",
         "AuthenticationOptions": {
           "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-          "AllowedScopes": [ "order_fullpermission" ]
+          "AllowedScopes": [ "fakepayment_fullpermission" ]
         }
-        },
-        {
-          "DownstreamPathTemplate": "/api/{everything}",
-          "DownstreamScheme": "http",
-          "DownstreamHostAndPorts": [
-            {
-              "Host": "localhost",
-              "Port": 5016
-            }
-          ],
-          "UpstreamPathTemplate": "/services/fakepayment/{everything}",
-          "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-          "UpstreamScheme": "http",
-          "AuthenticationOptions": {
-            "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-            "AllowedScopes": [ "fakepayment_fullpermission" ]
-          }
-        }
+      }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
