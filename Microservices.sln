@@ -48,11 +48,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Order.Infrastructu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FakePayment", "FakePayment", "{8DDA9745-32D9-44E4-8BC7-780C015CD628}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.FakePayment.API", "Services\FakePayment\Services.FakePayment.API\Services.FakePayment.API.csproj", "{29FA019A-8139-4C40-9B9F-B2ECB6EA4260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.FakePayment.API", "Services\FakePayment\Services.FakePayment.API\Services.FakePayment.API.csproj", "{29FA019A-8139-4C40-9B9F-B2ECB6EA4260}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{9DEFCC2E-DB26-4FC9-B1BA-C73FBD905EB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.API", "Gateway\Gateway.API\Gateway.API.csproj", "{B89F78E5-5BEA-40E9-90DA-E82ADF00B2E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway.API", "Gateway\Gateway.API\Gateway.API.csproj", "{B89F78E5-5BEA-40E9-90DA-E82ADF00B2E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnds", "FrontEnds", "{AA927F43-70BF-4CB0-861E-DED76423E13C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Web", "FrontEnds\Course.Web\Course.Web.csproj", "{9C857FE9-8FCA-49C8-812C-90208054F9FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +116,10 @@ Global
 		{B89F78E5-5BEA-40E9-90DA-E82ADF00B2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B89F78E5-5BEA-40E9-90DA-E82ADF00B2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B89F78E5-5BEA-40E9-90DA-E82ADF00B2E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C857FE9-8FCA-49C8-812C-90208054F9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C857FE9-8FCA-49C8-812C-90208054F9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C857FE9-8FCA-49C8-812C-90208054F9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C857FE9-8FCA-49C8-812C-90208054F9FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +144,7 @@ Global
 		{8DDA9745-32D9-44E4-8BC7-780C015CD628} = {FF2D47BC-06A4-403E-821D-3F99F30244CE}
 		{29FA019A-8139-4C40-9B9F-B2ECB6EA4260} = {8DDA9745-32D9-44E4-8BC7-780C015CD628}
 		{B89F78E5-5BEA-40E9-90DA-E82ADF00B2E8} = {9DEFCC2E-DB26-4FC9-B1BA-C73FBD905EB2}
+		{9C857FE9-8FCA-49C8-812C-90208054F9FC} = {AA927F43-70BF-4CB0-861E-DED76423E13C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEB87752-2BB7-4921-AD18-A5A5FE0A138B}
