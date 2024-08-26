@@ -66,7 +66,9 @@ namespace Course.Web.Services
             var properties = authenticationResult.Properties;
             properties.StoreTokens(authenticationTokens);
 
-            await _contextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,authenticationResult.Principal);
+            await _contextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                authenticationResult.Principal,properties);
+            
             return token;
         }
 
