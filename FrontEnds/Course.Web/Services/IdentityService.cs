@@ -24,7 +24,7 @@ namespace Course.Web.Services
         private readonly ClientSettings _clientSettings;
         private readonly ServiceApiSettings _serviceApiSettings;
 
-        public IdentityService(HttpClient client, HttpContextAccessor contextAccessor,
+        public IdentityService(HttpClient client, IHttpContextAccessor contextAccessor,
             IOptions<ClientSettings> clientSettings,IOptions<ServiceApiSettings> serviceApiSettings)
         {
             _httpClient = client;
@@ -73,7 +73,7 @@ namespace Course.Web.Services
             var userInfoRequest = new UserInfoRequest
             {
                 Token = token.AccessToken,
-                Address = disco.TokenEndpoint
+                Address = disco.UserInfoEndpoint
             };
 
             var userInfo = await _httpClient.GetUserInfoAsync(userInfoRequest);
