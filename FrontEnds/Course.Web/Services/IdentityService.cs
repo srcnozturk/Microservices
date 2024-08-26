@@ -20,7 +20,7 @@ namespace Course.Web.Services
     public class IdentityService : IIdentityService
     {
         private readonly HttpClient _httpClient;
-        private readonly HttpContextAccessor _contextAccessor;
+        private readonly IHttpContextAccessor _contextAccessor;
         private readonly ClientSettings _clientSettings;
         private readonly ServiceApiSettings _serviceApiSettings;
 
