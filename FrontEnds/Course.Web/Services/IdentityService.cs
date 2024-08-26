@@ -33,14 +33,46 @@ namespace Course.Web.Services
             _serviceApiSettings = serviceApiSettings.Value;
         }
 
-        public Task<TokenResponse> GetAccesTokenByRefreshToken()
+        public async Task<TokenResponse> GetAccesTokenByRefreshToken()
         {
-            throw new System.NotImplementedException();
+            var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _serviceApiSettings.BaseUrl,
+                Policy = new DiscoveryPolicy { RequireHttps = false }
+            });
+            if (disco.IsError) throw disco.Exception;
+
+            var refreshToken= await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            RefreshTokenRequest refreshTokenRequest = new()
+            {
+                ClientId = _clientSettings.WebClientForUser.ClientId,
+                ClientSecret = _clientSettings.WebClientForUser.ClientSecret,
+                RefreshToken = refreshToken,
+                Address = disco.TokenEndpoint
+            };
+            var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
+            if (token.IsError) return null;
+
+            var authenticationTokens=new List<AuthenticationToken> {
+
+                new AuthenticationToken{ Name=OpenIdConnectParameterNames.AccessToken,Value=token.AccessToken},
+                new AuthenticationToken{ Name=OpenIdConnectParameterNames.RefreshToken,Value=token.RefreshToken},
+                new AuthenticationToken{ Name=OpenIdConnectParameterNames.ExpiresIn,
+                    Value=DateTime.Now.AddSeconds(token.ExpiresIn).ToString("o",CultureInfo.InvariantCulture)}
+            };
+
+            var authenticationResult = await _contextAccessor.HttpContext.AuthenticateAsync();
+            var properties = authenticationResult.Properties;
+            properties.StoreTokens(authenticationTokens);
+
+            await _contextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,authenticationResult.Principal);
+            return token;
         }
 
-        public Task RevokeRefreshToken()
+        public async Task RevokeRefreshToken()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public async Task<Response<bool>> SignIn(SigninInput signInInput)
