@@ -1,4 +1,5 @@
-﻿using Course.Web.Models;
+﻿using Course.Web.Handler;
+using Course.Web.Models;
 using Course.Web.Services;
 using Course.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -32,7 +33,7 @@ namespace Course.Web
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUrl);
-            });
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
