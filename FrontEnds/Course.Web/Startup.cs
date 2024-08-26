@@ -1,11 +1,13 @@
-using Course.Web.Models;
+﻿using Course.Web.Models;
 using Course.Web.Services;
 using Course.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace Course.Web
 {
@@ -25,6 +27,17 @@ namespace Course.Web
             services.AddHttpContextAccessor();
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
+                {
+                    opts.LoginPath         = "/Auth/SignIn";
+                    opts.ExpireTimeSpan    = TimeSpan.FromDays(1);
+                    opts.SlidingExpiration = true;  //Giriş yaptıkça süre uzatılsın mı ?
+                    opts.Cookie.Name       = "udemywebcookie";
+                });
+
+
             services.AddControllersWithViews();
         }
 
@@ -42,7 +55,7 @@ namespace Course.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
