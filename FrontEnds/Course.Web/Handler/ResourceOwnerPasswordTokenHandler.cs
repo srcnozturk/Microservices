@@ -14,10 +14,10 @@ namespace Course.Web.Handler
     {
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IIdentityService _identityService;
-        private readonly ILogger _logger;
+        private readonly ILogger<ResourceOwnerPasswordTokenHandler> _logger;
 
         public ResourceOwnerPasswordTokenHandler(IHttpContextAccessor contextAccessor, 
-            IIdentityService identityService, ILogger logger)
+            IIdentityService identityService, ILogger<ResourceOwnerPasswordTokenHandler> logger)
         {
             _contextAccessor = contextAccessor;
             _identityService = identityService;
