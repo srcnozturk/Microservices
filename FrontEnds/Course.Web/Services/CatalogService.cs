@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Course.Web.Services
 {
-    public class CatelogService : ICatalogService
+    public class CatalogService : ICatalogService
     {
         private readonly HttpClient _httpClient;
 
-        public CatelogService(HttpClient httpClient)
+        public CatalogService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
