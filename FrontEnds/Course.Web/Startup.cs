@@ -32,6 +32,8 @@ namespace Course.Web
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             var serviceApiSettings =Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+            services.AddHttpClient<IClientCrediantialTokenService,ClientCrediantialTokenService>();
+
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
