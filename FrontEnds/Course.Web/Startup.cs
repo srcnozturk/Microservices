@@ -27,15 +27,19 @@ namespace Course.Web
         {
             
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
-            services.AddHttpClient<IIdentityService,IdentityService>();
             services.AddHttpContextAccessor();
+            services.AddAccessTokenManagement();
+
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             var serviceApiSettings =Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+            services.AddHttpClient<IIdentityService,IdentityService>();
             services.AddHttpClient<IClientCrediantialTokenService,ClientCrediantialTokenService>();
 
-            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+           
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Catalog.Path}");
