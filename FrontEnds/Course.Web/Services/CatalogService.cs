@@ -19,7 +19,7 @@ namespace Course.Web.Services
 
         public async Task<bool> AddCourseAsync(CourseCreate courseCreate)
         {
-            var response = await _httpClient.PostAsJsonAsync<CourseCreate>("course", courseCreate);
+            var response = await _httpClient.PostAsJsonAsync<CourseCreate>("courses", courseCreate);
             return response.IsSuccessStatusCode;
         }
 

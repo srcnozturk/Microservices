@@ -1,4 +1,5 @@
-﻿using Course.Web.Services.Interfaces;
+﻿using Course.Web.Models.Catalog;
+using Course.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,6 +30,16 @@ namespace Course.Web.Controllers
             var categories = await _catalogService.GetAllCategoriesAsync();
             ViewBag.categoryList = new SelectList(categories, "Id", "Name");
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(CourseCreate courseCreate)
+        {
+            var categories = await _catalogService.GetAllCategoriesAsync();
+            if (!ModelState.IsValid) return View();
+
+            courseCreate.UserId = _sharedIdentityService.GetUserId;
+            await _catalogService.AddCourseAsync(courseCreate);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
