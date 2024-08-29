@@ -41,5 +41,43 @@ namespace Course.Web.Controllers
             await _catalogService.AddCourseAsync(courseCreate);
             return RedirectToAction(nameof(Index));
         }
+        
+        public async Task<IActionResult> Update(string id)
+        {
+            var course = await _catalogService.GetByCourseId(id);
+            var categories = await _catalogService.GetAllCategoriesAsync();
+            if (course == null) RedirectToAction(nameof(Index));
+
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name",course.Id);
+            CourseUpdate courseUpdate = new()
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Description= course.Description,
+                Price = course.Price,
+                Feature= course.Feature,
+                CategoryId = course.CategoryId,
+                UserId= course.UserId,
+                Picture= course.Picture,
+            };
+            return View(courseUpdate);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CourseUpdate courseUpdate)
+        {
+            var categories = await _catalogService.GetAllCategoriesAsync();
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", courseUpdate.Id);
+            if (!ModelState.IsValid) return View();
+            await _catalogService.UpdateCourseAsync(courseUpdate);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _catalogService.DeleteCourseAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
