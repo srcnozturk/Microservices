@@ -1,22 +1,45 @@
 ﻿using Course.Web.Models.PhotoStocks;
 using Course.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Course.Web.Services
 {
     public class PhotoStockService : IPhotoStockService
     {
-        //private readonly IHtt
+        private readonly HttpClient _httpClient;
 
-        public Task<bool> DeletePhoto(string photoUrl)
+        public PhotoStockService(HttpClient httpClient)
         {
-            throw new System.NotImplementedException();
+            _httpClient = httpClient;
         }
 
-        public Task<PhotoStockViewModel> UploadPhoto(IFormFile photo)
+        public async Task<bool> DeletePhoto(string photoUrl)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.DeleteAsync($"photos?photoUrl={photoUrl}");
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<PhotoStockViewModel> UploadPhoto(IFormFile photo)
+        {
+            if (photo is null || photo.Length <= 0) return null;
+
+            var randomFileName=$"{Guid.NewGuid().ToString()}{Path.GetExtension(photo.FileName)}";
+            using var ms=new MemoryStream();
+            await photo.CopyToAsync(ms);
+
+            var multipartContent = new MultipartFormDataContent();
+            multipartContent.Add(new ByteArrayContent(ms.ToArray()), "photo", randomFileName);
+
+            var response = await _httpClient.PostAsync("photos", multipartContent);
+
+            if (!response.IsSuccessStatusCode) return null;
+
+            return await response.Content.ReadFromJsonAsync<PhotoStockViewModel>();
         }
     }
 }

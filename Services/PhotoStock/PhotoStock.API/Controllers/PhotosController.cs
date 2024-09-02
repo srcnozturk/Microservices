@@ -25,7 +25,7 @@ namespace PhotoStock.API.Controllers
                 
 
                 //http://www.photostock.api.com/photos/asadfa.jpg
-                var returnPath ="photos/"+photo.FileName;
+                var returnPath =photo.FileName;
 
                 PhotoDto photoDto = new() { Url=returnPath};
 
