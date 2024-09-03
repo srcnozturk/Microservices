@@ -1,4 +1,5 @@
 ﻿using Course.Web.Handler;
+using Course.Web.Helpers;
 using Course.Web.Models;
 using Course.Web.Services;
 using Course.Web.Services.Interfaces;
@@ -29,7 +30,7 @@ namespace Course.Web
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.AddHttpContextAccessor();
             services.AddAccessTokenManagement();
-
+            services.AddSingleton<PhotoHelper>();
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             var serviceApiSettings =Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();

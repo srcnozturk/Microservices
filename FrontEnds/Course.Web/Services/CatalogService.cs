@@ -1,4 +1,5 @@
-﻿using Course.Web.Models.Catalog;
+﻿using Course.Web.Helpers;
+using Course.Web.Models.Catalog;
 using Course.Web.Services.Interfaces;
 using Shared.Dtos;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace Course.Web.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IPhotoStockService _photoStockService;
+        private readonly PhotoHelper _photoHelper;
 
-        public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService)
+        public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
         {
-            _httpClient = httpClient;
+            _httpClient        = httpClient;
             _photoStockService = photoStockService;
+            _photoHelper       = photoHelper;
         }
 
         public async Task<bool> AddCourseAsync(CourseCreate courseCreate)
@@ -48,8 +51,12 @@ namespace Course.Web.Services
             var response = await _httpClient.GetAsync("course");
             if (!response.IsSuccessStatusCode) return null;
 
-            var responseSuccess= response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
-            return responseSuccess.Result.Data;
+            var responseSuccess=await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
+            responseSuccess.Data.ForEach(x =>
+            {
+                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+            });
+            return responseSuccess.Data;
         }
 
         public async Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId)
@@ -58,8 +65,13 @@ namespace Course.Web.Services
             var response = await _httpClient.GetAsync($"course/GetAllByUserId/{userId}");
             if (!response.IsSuccessStatusCode) return null;
 
-            var responseSuccess = response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
-            return responseSuccess.Result.Data;
+            var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
+            responseSuccess.Data.ForEach(x =>
+            {
+                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+            });
+
+            return responseSuccess.Data;
         }
 
         public async Task<CourseViewModel> GetByCourseId(string courseId)
