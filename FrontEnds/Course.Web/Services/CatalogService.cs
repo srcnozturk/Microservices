@@ -11,14 +11,19 @@ namespace Course.Web.Services
     public class CatalogService : ICatalogService
     {
         private readonly HttpClient _httpClient;
+        private readonly IPhotoStockService _photoStockService;
 
-        public CatalogService(HttpClient httpClient)
+        public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService)
         {
             _httpClient = httpClient;
+            _photoStockService = photoStockService;
         }
 
         public async Task<bool> AddCourseAsync(CourseCreate courseCreate)
         {
+            var resultPhotoService = await _photoStockService.UploadPhoto(courseCreate.PhotoFormFile);
+            if(resultPhotoService!=null) courseCreate.Picture=resultPhotoService.Url;
+
             var response = await _httpClient.PostAsJsonAsync<CourseCreate>("courses", courseCreate);
             return response.IsSuccessStatusCode;
         }

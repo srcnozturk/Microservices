@@ -1,6 +1,7 @@
 ﻿using Course.Web.Models.PhotoStocks;
 using Course.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Shared.Dtos;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -39,7 +40,8 @@ namespace Course.Web.Services
 
             if (!response.IsSuccessStatusCode) return null;
 
-            return await response.Content.ReadFromJsonAsync<PhotoStockViewModel>();
+            var responseSuccess= await response.Content.ReadFromJsonAsync<Response<PhotoStockViewModel>>();
+            return responseSuccess.Data;
         }
     }
 }
