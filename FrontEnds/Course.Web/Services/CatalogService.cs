@@ -85,6 +85,13 @@ namespace Course.Web.Services
 
         public async Task<bool> UpdateCourseAsync(CourseUpdate courseUpdate)
         {
+            var resultPhotoService = await _photoStockService.UploadPhoto(courseUpdate.PhotoFormFile);
+            if (resultPhotoService != null)
+            {
+                await _photoStockService.DeletePhoto(courseUpdate.Picture);
+                courseUpdate.Picture = resultPhotoService.Url;
+            }
+
             var response = await _httpClient.PostAsJsonAsync<CourseUpdate>("course", courseUpdate);
             return response.IsSuccessStatusCode;
         }

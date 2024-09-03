@@ -20,7 +20,7 @@ namespace Course.Web.Models.Catalog
         [Display(Name = "Kurs kategori")]
         [Required]
         public string CategoryId { get; set; }
-
+        [Display(Name = "Kurs Resim")]
         public IFormFile PhotoFormFile { get; set; }
     }
 }
