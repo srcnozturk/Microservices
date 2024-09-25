@@ -48,7 +48,7 @@ namespace Course.Web.Services
 
         public async Task<List<CourseViewModel>> GetAllCourseAsync()
         {
-            var response = await _httpClient.GetAsync("course");
+            var response = await _httpClient.GetAsync("courses");
             if (!response.IsSuccessStatusCode) return null;
 
             var responseSuccess=await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();

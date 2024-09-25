@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Course.Web</title>
    
    
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/bootstrap-5.2.3/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -28,12 +28,11 @@
                     {
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     @User.Identity.Name
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Index" href="#">Profil</a></li>
-                                    
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Profil</a></li>
                                     <li><a class="dropdown-item" asp-controller="Auth" asp-action="LogOut">Çıkış</a></li>
                                 </ul>
                             </li>
@@ -59,14 +58,8 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap-5.2.3/js/bootstrap.bundle.js"></script>
     <script src="~/lib/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap-5.2.3/js/bootstrap.esm.js"></script>
-    <script src="~/lib/bootstrap-5.2.3/js/bootstrap.esm.min.js"></script>
-    <script src="~/lib/bootstrap-5.2.3/js/bootstrap.js"></script>
-    <script src="~/lib/bootstrap-5.2.3/js/bootstrap.min.js"></script>
-    
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
