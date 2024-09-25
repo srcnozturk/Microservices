@@ -62,7 +62,7 @@ namespace Course.Web.Services
         public async Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId)
         {
             //[controller]/GetAllByUserId/{userId}
-            var response = await _httpClient.GetAsync($"course/GetAllByUserId/{userId}");
+            var response = await _httpClient.GetAsync($"courses/GetAllByUserId/{userId}");
             if (!response.IsSuccessStatusCode) return null;
 
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
@@ -76,7 +76,7 @@ namespace Course.Web.Services
 
         public async Task<CourseViewModel> GetByCourseId(string courseId)
         {
-            var response = await _httpClient.GetAsync($"course/{courseId}");
+            var response = await _httpClient.GetAsync($"courses/{courseId}");
             if (!response.IsSuccessStatusCode) return null;
 
             var responseSuccess = response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
@@ -92,7 +92,7 @@ namespace Course.Web.Services
                 courseUpdate.Picture = resultPhotoService.Url;
             }
 
-            var response = await _httpClient.PostAsJsonAsync<CourseUpdate>("course", courseUpdate);
+            var response = await _httpClient.PostAsJsonAsync<CourseUpdate>("courses", courseUpdate);
             return response.IsSuccessStatusCode;
         }
     }

@@ -5,7 +5,7 @@
 @model List<CourseViewModel>
 <h2>Kurslar</h2>
 <hr/>
-@* @if(Model.Any())
+@if(Model.Any())
 {
     @foreach (var item in Model)
     {
@@ -32,4 +32,4 @@
             @Html.Raw("</div>")
         }
     }
-} *@
+}
