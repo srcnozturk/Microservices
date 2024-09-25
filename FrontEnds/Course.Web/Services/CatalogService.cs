@@ -33,7 +33,7 @@ namespace Course.Web.Services
 
         public async Task<bool> DeleteCourseAsync(string courseId)
         {
-            var response = await _httpClient.DeleteAsync($"course/{courseId}");
+            var response = await _httpClient.DeleteAsync($"courses/{courseId}");
             return response.IsSuccessStatusCode;
         }
 
@@ -92,7 +92,7 @@ namespace Course.Web.Services
                 courseUpdate.Picture = resultPhotoService.Url;
             }
 
-            var response = await _httpClient.PostAsJsonAsync<CourseUpdate>("courses", courseUpdate);
+            var response = await _httpClient.PutAsJsonAsync<CourseUpdate>("courses", courseUpdate);
             return response.IsSuccessStatusCode;
         }
     }
