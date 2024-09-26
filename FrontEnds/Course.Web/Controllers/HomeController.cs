@@ -32,7 +32,6 @@ namespace Course.Web.Controllers
         public IActionResult Error()
         {
             var errorFeature = HttpContext.Features.Get<IExceptionHandlerFeature>();
-
             if (errorFeature != null && errorFeature.Error is UnAuthorizeException)
             {
                 return RedirectToAction(nameof(AuthController.LogOut), "Auth");

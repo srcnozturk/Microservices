@@ -33,15 +33,15 @@ namespace Course.Web.Services
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
                 Address = _serviceApiSettings.IdentityBaseUrl,
-                Policy = new DiscoveryPolicy { RequireHttps = false }
+                Policy  = new DiscoveryPolicy { RequireHttps = false }
             });
             if (disco.IsError) throw disco.Exception;
 
             var clientCredentialTokenRequest = new ClientCredentialsTokenRequest
             {
-                ClientId = _clientSettings.WebClient.ClientId,
+                ClientId     = _clientSettings.WebClient.ClientId,
                 ClientSecret = _clientSettings.WebClient.ClientSecret,
-                Address = disco.TokenEndpoint
+                Address      = disco.TokenEndpoint
             };
 
             var newToken = await _httpClient.RequestClientCredentialsTokenAsync(clientCredentialTokenRequest);

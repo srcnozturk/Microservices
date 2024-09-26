@@ -72,9 +72,9 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         IdentityServerConstants.LocalApi.ScopeName,"roles"},
-                  AccessTokenLifetime=1*60*30,
+                  AccessTokenLifetime=1*60*60, //Token süresi 1 saat
                   RefreshTokenExpiration=TokenExpiration.Absolute,
-                  AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMinutes(15)-DateTime.Now).TotalSeconds, // Refresh Token süresi 15 dk
+                  AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds, // Refresh Token süresi 60 GÜN
                   RefreshTokenUsage = TokenUsage.ReUse
                 }
             };
