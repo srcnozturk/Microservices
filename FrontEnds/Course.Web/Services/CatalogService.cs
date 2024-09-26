@@ -17,15 +17,15 @@ namespace Course.Web.Services
 
         public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
         {
-            _httpClient        = httpClient;
+            _httpClient = httpClient;
             _photoStockService = photoStockService;
-            _photoHelper       = photoHelper;
+            _photoHelper = photoHelper;
         }
 
         public async Task<bool> AddCourseAsync(CourseCreate courseCreate)
         {
             var resultPhotoService = await _photoStockService.UploadPhoto(courseCreate.PhotoFormFile);
-            if(resultPhotoService!=null) courseCreate.Picture=resultPhotoService.Url;
+            if (resultPhotoService != null) courseCreate.Picture = resultPhotoService.Url;
 
             var response = await _httpClient.PostAsJsonAsync<CourseCreate>("courses", courseCreate);
             return response.IsSuccessStatusCode;
@@ -51,10 +51,10 @@ namespace Course.Web.Services
             var response = await _httpClient.GetAsync("courses");
             if (!response.IsSuccessStatusCode) return null;
 
-            var responseSuccess=await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
+            var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
             responseSuccess.Data.ForEach(x =>
             {
-                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+                x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
             });
             return responseSuccess.Data;
         }
@@ -68,7 +68,7 @@ namespace Course.Web.Services
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
             responseSuccess.Data.ForEach(x =>
             {
-                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+                x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
             });
 
             return responseSuccess.Data;
@@ -80,6 +80,7 @@ namespace Course.Web.Services
             if (!response.IsSuccessStatusCode) return null;
 
             var responseSuccess = response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
+            responseSuccess.Result.Data.StockPictureUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Result.Data.Picture);
             return responseSuccess.Result.Data;
         }
 
