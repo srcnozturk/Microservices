@@ -35,7 +35,7 @@
                         </tr>
                         }
                         <tr> 
-                            <td>@Model.HasDiscount ? "İndirimli Fiyat": "Toplam Fiyat"</td>
+                            <td>@(Model.HasDiscount ? "İndirimli Fiyat": "Toplam Fiyat")</td>
                             <th colspan="2">@Model.TotalPrice TL</th>
                         </tr>
                     </table>
@@ -44,5 +44,4 @@
         </div>
     </div>
 </div>
-<h1>Index</h1>
 
