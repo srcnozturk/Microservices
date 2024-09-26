@@ -1,4 +1,5 @@
-﻿using Course.Web.Handler;
+﻿using Course.Web.Extensions;
+using Course.Web.Handler;
 using Course.Web.Helpers;
 using Course.Web.Models;
 using Course.Web.Services;
@@ -32,28 +33,12 @@ namespace Course.Web
             services.AddAccessTokenManagement();
             services.AddSingleton<PhotoHelper>();
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
-            var serviceApiSettings =Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+           
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
-            services.AddHttpClient<IIdentityService,IdentityService>();
-            services.AddHttpClient<IClientCrediantialTokenService,ClientCrediantialTokenService>();
-
-           
-            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Catalog.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-            services.AddHttpClient<IUserService, UserService>(opt =>
-            {
-                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUrl);
-            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
-            services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.PhotoStock.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+            services.AddHttpClientServices(Configuration);
 
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
