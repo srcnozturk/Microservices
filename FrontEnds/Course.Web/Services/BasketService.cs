@@ -11,18 +11,20 @@ namespace Course.Web.Services
     public class BasketService : IBasketService
     {
         private readonly HttpClient _httpClient;
+        private readonly IDiscountService _discountService;
 
-        public BasketService(HttpClient httpClient)
+        public BasketService(HttpClient httpClient, IDiscountService discountService)
         {
             _httpClient = httpClient;
+            _discountService = discountService;
         }
 
         public async Task AddBasketItem(BasketItemViewModel basketItemViewModel)
         {
             var basket = await Get();
-            if(basket is not null)
+            if (basket is not null)
             {
-                if(!basket.BasketItems.Any(x=> x.CourseId == basketItemViewModel.CourseId))
+                if (!basket.BasketItems.Any(x => x.CourseId == basketItemViewModel.CourseId))
                 {
                     basket.BasketItems.Add(basketItemViewModel);
                 }
@@ -35,14 +37,26 @@ namespace Course.Web.Services
             await SaveOrUpdate(basket);
         }
 
-        public Task<bool> ApplyDiscount(string discountCode)
+        public async Task<bool> ApplyDiscount(string discountCode)
         {
-            throw new System.NotImplementedException();
+            await CancelApplyDiscount();
+            var basket = await Get();
+            if (basket is null && basket.DiscountCode is null) return false;
+            var hasDiscount = await _discountService.GetDiscount(discountCode);
+            if(hasDiscount is null) return false;
+            basket.DiscountRate = hasDiscount.Rate;
+            basket.DiscountCode = hasDiscount.Code;
+            await SaveOrUpdate(basket);
+            return true;
         }
 
-        public Task<bool> CancelApplyDiscount()
+        public async Task<bool> CancelApplyDiscount()
         {
-            throw new System.NotImplementedException();
+            var basket = await Get();
+            if (basket is null && basket.DiscountCode is null)  return false;
+            basket.DiscountCode = null;
+            await SaveOrUpdate(basket);
+            return true;
         }
 
         public async Task<bool> Delete()
@@ -63,15 +77,15 @@ namespace Course.Web.Services
         public async Task<bool> RemoveBasketItem(string courseId)
         {
             var basket = await Get();
-            if(basket is null) return false;
+            if (basket is null) return false;
 
             var deleteBasketItem = basket.BasketItems.First(x => x.CourseId == courseId);
-            if(deleteBasketItem is null) return false;
+            if (deleteBasketItem is null) return false;
 
-            var deleteResult     = basket.BasketItems.Remove(deleteBasketItem);
-            if(!deleteResult) return false;
+            var deleteResult = basket.BasketItems.Remove(deleteBasketItem);
+            if (!deleteResult) return false;
 
-            if(basket.BasketItems.Any()) basket.DiscountCode=null;
+            if (basket.BasketItems.Any()) basket.DiscountCode = null;
             return await SaveOrUpdate(basket);
         }
 
