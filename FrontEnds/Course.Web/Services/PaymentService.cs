@@ -1,14 +1,24 @@
 ﻿using Course.Web.Models.FakePayments;
 using Course.Web.Services.Interfaces;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Course.Web.Services
 {
     public class PaymentService : IPaymentService
     {
-        public Task<bool> ReceiverPayment(PaymentInfoInput paymentInfoInput)
+        private readonly HttpClient _httpClient;
+
+        public PaymentService(HttpClient httpClient)
         {
-            throw new System.NotImplementedException();
+            _httpClient = httpClient;
+        }
+
+        public async Task<bool> ReceiverPayment(PaymentInfoInput paymentInfoInput)
+        {
+            var response = await _httpClient.PostAsJsonAsync<PaymentInfoInput>("fakepayments", paymentInfoInput);
+            return response.IsSuccessStatusCode;
         }
     }
 }
