@@ -41,11 +41,10 @@ namespace Course.Web.Services
         {
             await CancelApplyDiscount();
             var basket = await Get();
-            if (basket is null && basket.DiscountCode is null) return false;
+            if (basket is null) return false;
             var hasDiscount = await _discountService.GetDiscount(discountCode);
             if(hasDiscount is null) return false;
-            basket.DiscountRate = hasDiscount.Rate;
-            basket.DiscountCode = hasDiscount.Code;
+            basket.ApplyDiscount(hasDiscount.Code,hasDiscount.Rate);
             await SaveOrUpdate(basket);
             return true;
         }
@@ -53,8 +52,8 @@ namespace Course.Web.Services
         public async Task<bool> CancelApplyDiscount()
         {
             var basket = await Get();
-            if (basket is null && basket.DiscountCode is null)  return false;
-            basket.DiscountCode = null;
+            if (basket is null || basket.DiscountCode is null)  return false;
+            basket.CancelDiscount();
             await SaveOrUpdate(basket);
             return true;
         }
