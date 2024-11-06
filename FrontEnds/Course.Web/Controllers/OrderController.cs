@@ -16,7 +16,7 @@ namespace Course.Web.Controllers
             _orderService = orderService;
         }
 
-        public async Task<IActionResult> CheckOut()
+        public async Task<IActionResult> Checkout()
         {
             var basket = await _basketService.Get();
             ViewBag.basket=basket;
@@ -33,7 +33,7 @@ namespace Course.Web.Controllers
                 ViewBag.error = orderStatus.Error;
                 return View();
             }
-            return View(nameof(SuccessfullCheckout), new {orderId=orderStatus.OrderId}) ;
+            return RedirectToAction(nameof(SuccessfullCheckout), new {orderId=orderStatus.OrderId}) ;
         }
 
         public IActionResult SuccessfullCheckout(int orderId)
