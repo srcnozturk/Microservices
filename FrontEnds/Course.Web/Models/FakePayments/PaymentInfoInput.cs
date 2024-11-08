@@ -1,4 +1,6 @@
-﻿namespace Course.Web.Models.FakePayments
+﻿using Course.Web.Models.Orders;
+
+namespace Course.Web.Models.FakePayments
 {
     public class PaymentInfoInput
     {
@@ -7,5 +9,6 @@
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public decimal TotalPrice { get; set; }
+        public OrderCreateInput OrderCreateInput { get; set; }
     }
 }
