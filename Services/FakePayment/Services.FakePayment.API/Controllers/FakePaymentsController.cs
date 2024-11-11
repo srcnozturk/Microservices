@@ -51,7 +51,6 @@ namespace Services.FakePayment.API.Controllers
             }
             catch (Exception ex)
             {
-                // Hata mesajını loglayın veya geri döndürün
                 Console.WriteLine(ex.Message);
                 return BadRequest("Message sending failed: " + ex.Message);
             }
