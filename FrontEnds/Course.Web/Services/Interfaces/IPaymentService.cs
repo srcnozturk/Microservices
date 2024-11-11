@@ -5,6 +5,6 @@ namespace Course.Web.Services.Interfaces
 {
     public interface IPaymentService
     {
-        Task<bool> ReceiverPayment(PaymentInfoInput paymentInfoInput);
+        Task<bool> ReceivePayment(PaymentInfoInput paymentInfoInput);
     }
 }

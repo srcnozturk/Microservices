@@ -9,6 +9,6 @@ namespace Course.Web.Models.FakePayments
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public decimal TotalPrice { get; set; }
-        public OrderCreateInput OrderCreateInput { get; set; }
+        public OrderCreateInput Order { get; set; }
     }
 }

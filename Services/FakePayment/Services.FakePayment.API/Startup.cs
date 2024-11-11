@@ -32,7 +32,7 @@ namespace Services.FakePayment.API
                     cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
                     {
                         host.Username("guest");
-                        host.Password("gusst");
+                        host.Password("guest");
                     });
                 });
             });
