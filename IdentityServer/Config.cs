@@ -67,7 +67,7 @@ namespace IdentityServer
                   AllowOfflineAccess=true,
                   ClientSecrets ={new Secret("secret".Sha256()) },
                   AllowedGrantTypes=GrantTypes.ResourceOwnerPassword, //Credintials kullanılırsa refresh token alınmıyo
-                  AllowedScopes={ "gateway_fullpermission","fakepayment_fullpermission","order_fullpermission","discount_fullpermission","basket_fullpermission",IdentityServerConstants.StandardScopes.Email,
+                  AllowedScopes={ "gateway_fullpermission","order_fullpermission","basket_fullpermission",IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
@@ -76,7 +76,16 @@ namespace IdentityServer
                   RefreshTokenExpiration=TokenExpiration.Absolute,
                   AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds, // Refresh Token süresi 60 GÜN
                   RefreshTokenUsage = TokenUsage.ReUse
-                }
+                },
+                new Client
+                {
+                  ClientName="Token Exchange Client",
+                  ClientId="TokenExchangeClient",
+                  ClientSecrets ={new Secret("secret".Sha256()) },
+                  AllowedGrantTypes=new []{"urn:ietf:params:oauth:grant-type:token-exchange" },
+                  AllowedScopes={ "discount_fullpermission", "fakepayment_fullpermission", IdentityServerConstants.StandardScopes.OpenId }
+
+                },
             };
     }
 }
