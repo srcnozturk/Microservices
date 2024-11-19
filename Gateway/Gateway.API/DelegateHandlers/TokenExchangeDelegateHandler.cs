@@ -20,7 +20,7 @@ namespace Gateway.API.DelegateHandlers
 
         private async Task<string> GetToken(string requestToken)
         {
-            if (string.IsNullOrWhiteSpace(_accesstoken)) return _accesstoken;
+            if (!string.IsNullOrWhiteSpace(_accesstoken)) return _accesstoken;
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
                 Address = _configuration["IdentityServerURL"],
