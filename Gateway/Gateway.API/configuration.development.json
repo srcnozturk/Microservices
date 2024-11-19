@@ -63,9 +63,9 @@
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExchangeDelegateHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "discount_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme"
       }
     },
     {
@@ -86,23 +86,23 @@
 
       }
     },
-      {
-        "DownstreamPathTemplate": "/api/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "localhost",
-            "Port": 5016
-          }
-        ],
-        "UpstreamPathTemplate": "/services/fakepayment/{everything}",
-        "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-        "UpstreamScheme": "http",
-        "AuthenticationOptions": {
-          "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-          "AllowedScopes": [ "fakepayment_fullpermission" ]
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5016
         }
+      ],
+      "UpstreamPathTemplate": "/services/fakepayment/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExchangeDelegateHandler" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme"
       }
+    }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
