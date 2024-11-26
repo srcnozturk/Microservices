@@ -1,0 +1,27 @@
+services:
+  catalogdb:
+    image: mongo
+    volumes:
+      - catalogdb_volume:/data/db
+  basketdb:
+    image: redis
+  discount:
+    image: postgres
+    volumes:
+      - discount_volume:/var/lib/postgresql/data
+  identitydb:
+    image: mcr.microsoft.com/mssql/server
+    volumes:
+      - identitydb_volume:/var/opt/mssql
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
+    volumes:
+      - orderdb_volume:/var/opt/mssql
+  rabbitmq:
+    image: rabbitmq:3.13.7-management
+
+volumes:
+  catalogdb_volume:
+  discount_volume:
+  identitydb_volume:
+  orderdb_volume:
