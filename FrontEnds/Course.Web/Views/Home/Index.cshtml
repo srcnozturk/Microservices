@@ -3,10 +3,11 @@
     var count = 0;
 }
 @model List<CourseViewModel>
-<h2>Kurslar</h2>
-<hr/>
+
 @if(Model.Any())
 {
+    <h2>Kurslar</h2>
+    <hr />
     @foreach (var item in Model)
     {
         count++;
@@ -14,6 +15,7 @@
         {
             @Html.Raw("<div class='row row-cols-1 row-cols-md-3 g-4 mb-2'>")
         }
+       
         <div class="col">
             <div class="card">
                 <img src="@item.StockPictureUrl" class="card-img-top" alt="...">
