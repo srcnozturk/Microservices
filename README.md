@@ -61,16 +61,15 @@ Sipariş detaylarının görüntülendiği ve takip edilebildiği sayfa:
 
 ---
 
-### 🚀 **Projeyi Çalıştırma**  
+## 🚀 **Projeyi Çalıştırma**  
 
-1. **Gereksinimler**  
+### 1️⃣ **Gereksinimler**  
    - .NET 5 SDK  
-   - Docker & Kubernetes  
-   - RabbitMQ, Redis, PostgreSQL, MongoDB  
+   - MSSQL veya PostgreSQL  
+   - Redis (Opsiyonel)  
    - Visual Studio veya VS Code  
 
-2. **Kurulum Adımları**  
+### 2️⃣ **Kurulum Adımları**  
    ```sh
    git clone https://github.com/kullanici/microservices-project.git
    cd microservices-project
-   docker-compose up -d
