@@ -1,13 +1,13 @@
 Services 
 
--IdentityAPI    => 5001  -Sql
+-IdentityAPI    => 5001  - Sql - Docker: 1433
 
-	-CatalogAPI     => 5011  - Mongo
-	-PhotoStockAPI  => 5012 
-	-BasketAPI		=> 5013 - Redis
+	-CatalogAPI     => 5011 - Mongo Docker:27017
+	-PhotoStockAPI  => 5012 - 
+	-BasketAPI		=> 5013 - Redis   Docker:6379
 	-DiscountAPI    => 5014 - Pgsql - Dapper
-	-OrderAPI		=> 5015 - Sql
-	-FakePaymentAPI => 5016  
+	-OrderAPI		=> 5015 - Sql - Docker:1444
+	-FakePaymentAPI => 5016 - RabbitMQ -	Docker:5672
 
 -Gateway    =>5000
 -Course.Web => 5010
