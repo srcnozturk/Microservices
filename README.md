@@ -61,15 +61,3 @@ Sipariş detaylarının görüntülendiği ve takip edilebildiği sayfa:
 
 ---
 
-## 🚀 **Projeyi Çalıştırma**  
-
-### 1️⃣ **Gereksinimler**  
-   - .NET 5 SDK  
-   - MSSQL veya PostgreSQL  
-   - Redis (Opsiyonel)  
-   - Visual Studio veya VS Code  
-
-### 2️⃣ **Kurulum Adımları**  
-   ```sh
-   git clone https://github.com/kullanici/microservices-project.git
-   cd microservices-project
